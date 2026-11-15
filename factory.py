@@ -5,9 +5,19 @@
 
 from devices import IDevice, SmartLight, SmartFan, SmartDoor
 
+
 class DeviceFactory:
+    """
+    Factory: tạo thiết bị theo loại do người dùng chọn.
+    Client chỉ biết IDevice và chuỗi loại, không gọi constructor của lớp cụ thể.
+    """
+
     @staticmethod
     def create(device_type: str, name: str) -> IDevice:
+        """
+        Tạo thiết bị. Chuỗi loại không phân biệt hoa/thường và được cắt khoảng trắng.
+        Loại không hỗ trợ thì ném ValueError (tương đương ArgumentException), không trả về None.
+        """
         normalized_type = device_type.strip().lower()
         if normalized_type == "light":
             return SmartLight(name)
